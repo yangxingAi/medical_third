@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.software_1.mapper.TableManagerMapper">
+
+    <resultMap id="BaseResultMap" type="com.cqupt.software_1.entity.TableManager">
+            <result property="id" column="id" jdbcType="INTEGER"/>
+            <result property="tableName" column="table_name" jdbcType="VARCHAR"/>
+            <result property="tableNameCh" column="table_name_ch" jdbcType="VARCHAR"/>
+            <result property="fieldName" column="field_name" jdbcType="VARCHAR"/>
+            <result property="fieldNameCh" column="field_name_ch" jdbcType="VARCHAR"/>
+            <result property="fieldDesc" column="field_desc" jdbcType="VARCHAR"/>
+            <result property="fieldType" column="field_type" jdbcType="VARCHAR"/>
+            <result property="fieldRange" column="field_range" jdbcType="VARCHAR"/>
+            <result property="fileldUnit" column="fileld_unit" jdbcType="VARCHAR"/>
+            <result property="diseaseType" column="disease_type" jdbcType="VARCHAR"/>
+            <result property="isDemography" column="is_demography" jdbcType="VARCHAR"/>
+            <result property="isSociology" column="is_sociology" jdbcType="VARCHAR"/>
+            <result property="isClinicalRelationship" column="is_clinical_relationship" jdbcType="VARCHAR"/>
+            <result property="isMultipleDiseases" column="is_multiple_diseases" jdbcType="VARCHAR"/>
+            <result property="isZooInformation" column="is_zoo_information" jdbcType="VARCHAR"/>
+            <result property="isQuestionnaire" column="is_questionnaire" jdbcType="VARCHAR"/>
+            <result property="isTimeInformation" column="is_time_information" jdbcType="VARCHAR"/>
+            <result property="startTime" column="start_time" jdbcType="VARCHAR"/>
+            <result property="endTime" column="end_time" jdbcType="VARCHAR"/>
+            <result property="timeSpace" column="time_space" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="VARCHAR"/>
+            <result property="tablePeople" column="table_people" jdbcType="VARCHAR"/>
+            <result property="tableOrigin" column="table_origin" jdbcType="VARCHAR"/>
+            <result property="tableSize" column="table_size" jdbcType="VARCHAR"/>
+            <result property="tableStatus" column="table_status" jdbcType="VARCHAR"/>
+            <result property="userId" column="userId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,table_name,tabale_name_ch,
+        field_name,field_name_ch,field_desc,
+        field_type,field_range,fileld_unit,
+        disease_type,is_demography,is_sociology,
+        is_clinical_relationship,is_multiple_diseases,is_zoo_information,
+        is_questionnaire,is_time_information,start_time,
+        end_time,time_space,create_time,
+        update_time,table_people,table_origin,
+        table_size,table_status,belong_userId
+    </sql>
+
+
+
+    <select id="getFiledByTableName" resultType="java.lang.String">
+        select COLUMN_NAME from information_schema.COLUMNS where table_name = #{tableName} and table_schema = 'medical';
+    </select>
+    <select id="getCommentsByTableName" resultType="java.lang.String">
+
+        select column_comment as comment from information_schema.columns
+        where table_schema='medical' and table_name= #{tableName};
+    </select>
+
+
+    <select id="getInfoByTableName" resultType="java.lang.Object">
+select  * from ${tableName}
+    </select>
+
+
+
+    <select id="getInfoByFiled" resultType="com.cqupt.software_1.entity.TableManager">
+
+select is_demography , is_physiological ,is_sociology from  t_table_manager where field_name = #{param}
+
+    </select>
+
+
+
+    <insert id="insertTableManager" parameterType="com.cqupt.software_1.entity.TableManager">
+        INSERT INTO t_table_manager (table_name, field_name, is_demography, is_physiological, is_sociology)
+        VALUES
+        <foreach collection="tableHeaders" item="header" separator=",">
+            (#{tableName}, #{header.fieldName}, #{header.isDemography}, #{header.isPhysiological}, #{header.isSociology})
+        </foreach>
+    </insert>
+</mapper>

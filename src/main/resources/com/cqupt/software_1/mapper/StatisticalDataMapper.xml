@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.software_1.mapper.StatisticalDataMapper">
+
+    <select id="getAllTableNameOfDataBase" resultType="java.lang.String">
+
+        select table_name from information_schema.tables  where table_schema='medical';
+
+    </select>
+
+
+
+    <select id="getCount" resultType="java.lang.Long">
+
+        select COUNT(*) from ${tableName};
+
+    </select>
+    <select id="getColumn" resultType="java.lang.Long">
+        SELECT COUNT(*)  FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE table_schema = 'medical' AND table_name = #{tableName};
+
+    </select>
+    <select id="getColumnsByTableName" resultType="java.lang.String">
+
+
+
+        SELECT COLUMN_NAME
+        FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE TABLE_SCHEMA = 'medical'
+          AND TABLE_NAME = #{tableName};
+
+    </select>
+    <select id="getColumnMissCount" resultType="java.lang.Long">
+
+        SELECT COUNT(*) FROM ${tableName} WHERE ${filedName} IS NULL;
+
+    </select>
+    <select id="countTableBeforeDate" resultType="java.lang.Integer">
+
+
+        SELECT COUNT(*)
+        FROM table_info
+        WHERE create_time &lt;= #{dateParam}
+    </select>
+</mapper>

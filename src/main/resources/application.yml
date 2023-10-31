@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:mysql://10.16.48.219:3306/medical?characterEncoding=utf-8
+    username: root
+    password: 111111
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 8083
+
+
+# 远程服务器配置
+remote:
+  remoteHost: 10.16.48.219
+  remotePort: 10023
+  remoteUsername: root
+  remotePassword: 111111
+  remoteFilePath: /var/lib/mysql-files/
+
+# python 文件的路径s   pca算法
+pyPath: F:\mdical\software_1\src\main\resources\py\pca.py
+
+
+

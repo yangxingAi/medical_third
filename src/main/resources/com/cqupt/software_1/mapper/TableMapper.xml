@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.software_1.mapper.TableMapper">
+
+
+    <insert id="createTable" parameterType="java.util.Map">
+        CREATE TABLE ${tableName} (
+        <foreach collection="fieldMap.entrySet()" index="key" item="value" separator=",">
+            ${key} ${value}
+        </foreach>
+        )
+    </insert>
+    <insert id="saveCSV2MySQL">
+
+        LOAD DATA INFILE #{remotePath}
+INTO TABLE ${OriginalFilename}
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+    </insert>
+
+
+    <insert id="insertTableInfo">
+
+insert into  table_info(table_name, create_time) values(#{tableName},CURRENT_DATE);
+
+    </insert>
+
+
+</mapper>

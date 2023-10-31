@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.cqupt.software4.dao.datatable.tTableManagerMapper" >
+    <select id="upall" resultType="com.cqupt.software4.entity.tTableManager">
+        SELECT * FROM t_table_manager
+    </select>
+
+    <select id="upbytablename" resultType="com.cqupt.software4.entity.tTableManager">
+        SELECT * FROM t_table_manager where table_name=#{tableName}
+    </select>
+
+    <select id="bytablename" resultType="com.cqupt.software4.common.HeaderExtractionResponse">
+    SELECT field_name, is_demography, is_physiological, is_sociology FROM t_table_manager WHERE table_name = #{tableName}
+    </select>
+
+
+    <select id="findTablesName" resultType="java.lang.String">
+    SELECT table_name FROM  t_table_manager
+    </select>
+    <insert id="insertTableManager" parameterType="com.cqupt.software4.common.TableManagerDTO">
+        INSERT INTO t_table_manager (table_name, field_name, is_demography, is_physiological, is_sociology,is_label)
+        VALUES
+        <foreach collection="tableHeaders" item="header" separator=",">
+            (#{tableName}, #{header.fieldName}, #{header.isDemography}, #{header.isPhysiological}, #{header.isSociology},#{header.isLabel})
+        </foreach>
+    </insert>
+    <delete id="deletebyname">
+        delete from t_table_manager where table_name = #{tableName}
+    </delete>
+
+</mapper>
